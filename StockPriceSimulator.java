@@ -45,15 +45,19 @@ public class StockPriceSimulator {
 		symbol=keyboard.nextLine();
 		System.out.print("Please enter yesterday's price: " +  currentPrice);
 		currentPrice=keyboard.nextDouble();
-		
-		if(name.equals("NONE") && symbol.equals("NA") && currentPrice==0) {
+	
+		if(name.equals("NONE") && symbol.equals("NA") ) {
 			stock =new Stock();
 		}
 		else {
 			stock=new Stock(name,symbol,currentPrice,nextPrice);
+			stock.setName(name);
+			stock.setSymbol(symbol);
+			stock.setCurrentPrice(currentPrice);
 		}
 		//headers
 		System.out.println("STOCK\t\tSYMBOL\tYESTERDAY_PRICE\tTODAY_PRICE\tPRICE_MOVEMENT\tCHANGE_PERCENT");
+		outFile.println("STOCK\t\tSYMBOL\tYESTERDAY_PRICE\tTODAY_PRICE\tPRICE_MOVEMENT\tCHANGE_PERCENT");
 		for (int i=1;i<=NUMBER_OF_DAYS;i++) {
 			stock.SimulatePrice();
 			System.out.printf("%s\t%s\t%.2f\t\t%.2f\t\t%.2f\t\t%.2f%%\n",stock.getName(),stock.getSymbol(),stock.getCurrentPrice(),stock.getNextPrice(), stock.getPriceChange(),stock.getPriceChangePercentage());

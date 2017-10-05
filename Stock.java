@@ -40,7 +40,12 @@ public class Stock{
 	
 	//setter for priceChangePercentage
 	public void setPriceChangePercentage(double priceChangePercentage) {
+		if(priceChangePercentage>0) {
 		priceChangePercentage_=priceChangePercentage;
+		}
+		else {
+			priceChangePercentage=0;
+		}
 	}
 	
 	// setter for name
@@ -64,7 +69,7 @@ public class Stock{
 	 * @param currentPrice
 	 */
 	public void setCurrentPrice(double currentPrice ) {
-		if(currentPrice>=0) {
+		if(currentPrice>0) {
 		currentPrice_=currentPrice;
 		}
 		else {
@@ -78,7 +83,7 @@ public class Stock{
 	 */
 	public void setNextPrice(double nextPrice) {
 		nextPrice_=nextPrice;
-		if (nextPrice>=0) {
+		if (nextPrice>0) {
 			nextPrice_=nextPrice;
 		}
 		else {
@@ -146,29 +151,34 @@ public class Stock{
 		double decimalRandomNumber=random.nextDouble();
 		double percent=decimalRandomNumber+integerRandomNumber;
 		double decimalPercent=percent/100;
+		setPriceChangePercentage(decimalPercent);
+		//double priceChange=getPriceChange();
+		double nextPrice;
+		double currentPrice_=getCurrentPrice();
+		double currentPrice=currentPrice_;
 		Random randomNum=new Random();
 		int signChange;
 		signChange=randomNum.nextInt(2)+1;
 		//to get increasing or decreasing
 		if(signChange==1) {
-			nextPrice_=currentPrice_+(currentPrice_*decimalPercent);
-			priceChange_=(nextPrice_-currentPrice_);
-			priceChangePercentage_=(priceChange_/currentPrice_);
-			//possible mess up
-			//nextPrice_=currentPrice_;
+			setNextPrice(currentPrice-(currentPrice*decimalPercent));
+			nextPrice=getNextPrice();
+			//setPriceChange(nextPrice-currentPrice);
 					
 		}
 		else {
-			nextPrice_=currentPrice_-(currentPrice_*decimalPercent);
-			priceChange_=(nextPrice_-currentPrice_);
-			priceChangePercentage_=(priceChange_/currentPrice_);
-			//error possible
-			//nextPrice_=currentPrice_;
-			
+			setNextPrice(currentPrice-(currentPrice*decimalPercent));
+			nextPrice=getNextPrice();
+			setPriceChange(nextPrice-currentPrice);
+				
 		}
-		nextPrice_=currentPrice_;
+		//currentPrice_=nextPrice;
+		setCurrentPrice(nextPrice);
 		
 	}//end bracket of SimulatePrice
+	//public void updateCurrentPrice() {
+		//currentPrice_=nextPrice();
+	//}
 	
 	
 	
